@@ -1,0 +1,153 @@
+/* Expo Arabic — local fonts */
+@font-face {
+  font-family: 'Expo Arabic';
+  src: url('/fonts/ExpoArabic-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Expo Arabic';
+  src: url('/fonts/ExpoArabic-Book.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Expo Arabic';
+  src: url('/fonts/ExpoArabic-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Expo Arabic';
+  src: url('/fonts/ExpoArabic-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Expo Arabic';
+  src: url('/fonts/ExpoArabic-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand: forest #12332A, lime #D9FF9C, sage #428A6F, cyan #CFF9FF */
+    --background: 163 47% 14%;
+    --foreground: 0 0% 100%;
+
+    --card: 163 47% 14%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 163 47% 11%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 80 100% 81%;            /* lime — CTA */
+    --primary-foreground: 163 47% 14%;
+
+    --secondary: 158 35% 40%;          /* sage */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 163 30% 20%;
+    --muted-foreground: 158 30% 70%;
+
+    --accent: 187 100% 90%;            /* cyan */
+    --accent-foreground: 163 47% 14%;
+
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 158 35% 30%;
+    --input: 158 35% 30%;
+    --ring: 80 100% 81%;
+
+    --radius: 0.6rem;
+
+    --success: 80 100% 81%;
+    --success-foreground: 163 47% 14%;
+    --warning: 38 92% 60%;
+    --warning-foreground: 163 47% 14%;
+
+    --brand-forest: 163 47% 14%;
+    --brand-lime: 80 100% 81%;
+    --brand-sage: 158 35% 40%;
+    --brand-cyan: 187 100% 90%;
+
+    --sidebar-background: 163 47% 11%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 80 100% 81%;
+    --sidebar-primary-foreground: 163 47% 14%;
+    --sidebar-accent: 158 35% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 158 35% 25%;
+    --sidebar-ring: 80 100% 81%;
+  }
+
+  .dark {
+    --background: 163 47% 10%;
+    --foreground: 0 0% 100%;
+    --card: 163 47% 12%;
+    --card-foreground: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  html {
+    direction: rtl;
+    /* iOS safe-area: respect notch + home indicator */
+    background-color: hsl(var(--background));
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Expo Arabic', 'IBM Plex Sans Arabic', 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    /* Prevent overscroll bounce on iOS that exposes white background */
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    /* Honor iPhone safe areas (notch / dynamic island / home indicator) */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Inputs ≥16px to stop iOS auto-zoom on focus */
+  input, textarea, select {
+    font-size: 16px;
+  }
+
+  h1, h2, h3, h4, h5, h6 { font-weight: 700; }
+}
+
+@layer utilities {
+  .safe-top { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+}
+
+@layer utilities {
+  .brand-glow {
+    box-shadow: 0 0 0 1px hsl(var(--brand-lime) / 0.0), 0 10px 40px -10px hsl(var(--brand-lime) / 0.25);
+  }
+  .card-hover {
+    transition: all .25s ease;
+  }
+  .card-hover:hover {
+    border-color: hsl(var(--brand-lime));
+    box-shadow: 0 0 24px -6px hsl(var(--brand-lime) / 0.35);
+  }
+}
