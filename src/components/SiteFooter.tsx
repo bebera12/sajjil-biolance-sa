@@ -1,5 +1,5 @@
 import { BiolanceLogo } from './BiolanceLogo';
-import { Mail, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, Instagram, Phone } from 'lucide-react';
 
 export function SiteFooter() {
   return (
@@ -14,13 +14,22 @@ export function SiteFooter() {
           <Mail className="h-4 w-4" />
           info@biolance.sa
         </a>
-        <div className="flex items-center gap-5">
-          {[Twitter, Linkedin, Instagram].map((Icon, i) => (
-            <a key={i} href="#" className="text-[hsl(var(--brand-sage))] hover:text-[hsl(var(--brand-lime))] transition-colors">
-              <Icon className="h-5 w-5" />
-            </a>
-          ))}
-        </div>
+        <a
+          href="tel:+966501823588"
+          className="flex items-center gap-2 text-sm text-[hsl(var(--brand-cyan))] hover:text-[hsl(var(--brand-lime))] transition-colors"
+          dir="ltr"
+        >
+          <Phone className="h-4 w-4" />
+          +966 50 182 3588
+        </a>
+        <a
+          href="https://www.instagram.com/biolance.sa"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[hsl(var(--brand-sage))] hover:text-[hsl(var(--brand-lime))] transition-colors"
+        >
+          <Instagram className="h-5 w-5" />
+        </a>
         <p className="text-xs text-[hsl(var(--brand-sage))]">
           © 2026 Biolance | بيولانس — جميع الحقوق محفوظة
         </p>

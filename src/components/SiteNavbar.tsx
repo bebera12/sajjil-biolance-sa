@@ -3,7 +3,7 @@ import { BiolanceLogo } from './BiolanceLogo';
 
 const links = [
   { label: 'الرئيسية', to: '/' },
-  { label: 'خدماتنا', to: '/#services' },
+  { label: 'خدماتنا', to: '/about#services' },
   { label: 'من نحن', to: '/about' },
   { label: 'تواصل معنا', to: '/contact' },
 ];

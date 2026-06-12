@@ -102,7 +102,7 @@ export default function About() {
       {/* Section 4 — خدماتنا */}
       <section className="bg-[hsl(var(--brand-sage))]/10 border-y border-[hsl(var(--brand-sage))]/30">
         <div className="container mx-auto px-4 py-20">
-          <h2 className="text-center text-3xl md:text-4xl font-bold text-[hsl(var(--brand-lime))]">خدماتنا الستة</h2>
+          <h2 className="text-center text-3xl md:text-4xl font-bold text-[hsl(var(--brand-lime))]">خدماتنا</h2>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICES.map(({ n, icon: Icon, title, desc }) => (
               <div
