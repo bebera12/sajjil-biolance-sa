@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { z } from 'zod';
 import { SiteNavbar } from '@/components/SiteNavbar';
 import { SiteFooter } from '@/components/SiteFooter';
 import { Button } from '@/components/ui/button';
@@ -8,25 +7,19 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { ArrowLeft, CheckCircle2, Mail, Phone, MapPin, Loader2 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-
-const contactSchema = z.object({
-  name: z.string().trim().min(2, 'الاسم يجب أن يكون حرفين على الأقل').max(100),
-  email: z.string().trim().email('البريد الإلكتروني غير صالح').max(255),
-  phone: z.string().trim().max(30).optional().or(z.literal('')),
-  company: z.string().trim().max(150).optional().or(z.literal('')),
-  category: z.string().trim().max(100).optional().or(z.literal('')),
-  message: z.string().trim().min(10, 'الرسالة يجب أن تكون 10 أحرف على الأقل').max(2000),
-});
-
-const STORAGE_KEY = 'sajjil_contact_submissions';
+import {
+  submitConsultation,
+  type ConsultationFieldErrors,
+  type ConsultationFormValues,
+  validateConsultation,
+} from '@/lib/consultation';
 
 export default function Contact() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<ConsultationFormValues>({
     name: '', email: '', phone: '', company: '', category: '', message: '',
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<ConsultationFieldErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
@@ -37,50 +30,16 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = contactSchema.safeParse(form);
-    if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      result.error.issues.forEach(i => {
-        const key = i.path[0] as string;
-        if (!fieldErrors[key]) fieldErrors[key] = i.message;
-      });
-      setErrors(fieldErrors);
+    const { data, errors: validationErrors } = validateConsultation(form);
+    if (!data) {
+      setErrors(validationErrors);
       return;
     }
     setErrors({});
     setSubmitting(true);
 
-    const submittedAt = new Date().toISOString();
-    const idemBase = `contact-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-
     try {
-      try {
-        const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        existing.unshift({ ...result.data, submittedAt });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-      } catch {}
-
-      // 1) Notify the team at info@biolance.sa
-      const notifyRes = await supabase.functions.invoke('send-transactional-email', {
-        body: {
-          templateName: 'contact-notification',
-          idempotencyKey: `${idemBase}-notify`,
-          templateData: { ...result.data, submittedAt },
-        },
-      });
-      if (notifyRes.error) throw notifyRes.error;
-
-      // 2) Send confirmation to the client
-      const confirmRes = await supabase.functions.invoke('send-transactional-email', {
-        body: {
-          templateName: 'contact-confirmation',
-          recipientEmail: result.data.email,
-          idempotencyKey: `${idemBase}-confirm`,
-          templateData: { name: result.data.name },
-        },
-      });
-      if (confirmRes.error) throw confirmRes.error;
-
+      await submitConsultation(data);
       setSubmitted(true);
     } catch (err) {
       console.error('Failed to send contact emails', err);
