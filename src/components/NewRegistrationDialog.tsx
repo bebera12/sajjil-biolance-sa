@@ -6,6 +6,13 @@ import { Label } from '@/components/ui/label';
 import { CategorySelector } from './CategorySelector';
 import { ProductCategory, categoryLabels } from '@/lib/registration-data';
 
+const namePlaceholders: Record<ProductCategory, string> = {
+  supplement: 'مثال: فيتامين د 1000 وحدة',
+  medical_device: 'اسم الجهاز',
+  pharmaceutical: 'مثال: براسيتامول',
+  cosmetic: 'مثال: سيروم فيتامين سي',
+};
+
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -47,7 +54,7 @@ export function NewRegistrationDialog({ open, onClose, onSubmit }: Props) {
           <DialogTitle>{step === 'category' ? 'اختر فئة المنتج' : 'اسم المنتج'}</DialogTitle>
           <DialogDescription>
             {step === 'category'
-              ? 'حدد نوع المنتج الذي تريد تسجيله لدى هيئة الغذاء والدواء'
+              ? 'حدد نوع المنتج الذي تريد تسجيله لدى هيئة الغذاء والدواء والجهات التنظيمية'
               : `تسجيل منتج جديد - ${category ? categoryLabels[category] : ''}`}
           </DialogDescription>
         </DialogHeader>
@@ -62,7 +69,7 @@ export function NewRegistrationDialog({ open, onClose, onSubmit }: Props) {
                 id="product-name"
                 value={name}
                 onChange={e => setName(e.target.value)}
-                placeholder="مثال: فيتامين د 1000 وحدة"
+                placeholder={category ? namePlaceholders[category] : ''}
                 autoFocus
               />
             </div>

@@ -82,8 +82,8 @@ export default function Contact() {
           {/* Info side */}
           <aside className="space-y-4 md:col-span-1">
             {[
-              { icon: Mail, label: 'البريد الإلكتروني', value: 'info@biolance.sa' },
-              { icon: Phone, label: 'الجوال', value: '+966 50 182 3588' },
+              { icon: Mail, label: 'البريد الإلكتروني', value: 'hello@biolance.sa' },
+              { icon: Phone, label: 'الجوال', value: '+966 50 000 0000' },
               { icon: MapPin, label: 'الموقع', value: 'الرياض، المملكة العربية السعودية' },
             ].map(({ icon: Icon, label, value }) => (
               <div key={label} className="rounded-xl border border-[hsl(var(--brand-sage))]/50 bg-[hsl(var(--brand-sage))]/10 p-5">

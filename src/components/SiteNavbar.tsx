@@ -19,20 +19,12 @@ export function SiteNavbar({ onContact }: { onContact?: () => void }) {
         </Link>
         <nav className="hidden md:flex items-center gap-7">
           {links.map(l => {
-            const isHash = l.to.includes('#');
-            const isActive = !isHash && pathname === l.to;
+            const isActive = pathname === l.to.split('#')[0];
             const className = `text-sm transition-colors ${
               isActive
                 ? 'text-[hsl(var(--brand-lime))] font-semibold'
                 : 'text-[hsl(var(--brand-cyan))] hover:text-[hsl(var(--brand-lime))]'
             }`;
-            if (isHash) {
-              return (
-                <a key={l.to} href={l.to} className={className}>
-                  {l.label}
-                </a>
-              );
-            }
             return (
               <Link key={l.to} to={l.to} className={className}>
                 {l.label}

@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { SiteNavbar } from '@/components/SiteNavbar';
 import { SiteFooter } from '@/components/SiteFooter';
 import { Button } from '@/components/ui/button';
@@ -26,6 +27,17 @@ const WHY = [
 ];
 
 export default function About() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const hash = location.hash;
+    if (hash) {
+      const el = document.getElementById(hash.replace('#', ''));
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
+      }
+    }
+  }, [location]);
   return (
     <div className="min-h-screen bg-[hsl(var(--brand-forest))] text-white" dir="rtl">
       <SiteNavbar onContact={() => {}} />
@@ -100,7 +112,7 @@ export default function About() {
       </section>
 
       {/* Section 4 — خدماتنا */}
-      <section className="bg-[hsl(var(--brand-sage))]/10 border-y border-[hsl(var(--brand-sage))]/30">
+      <section id="services" className="bg-[hsl(var(--brand-sage))]/10 border-y border-[hsl(var(--brand-sage))]/30">
         <div className="container mx-auto px-4 py-20">
           <h2 className="text-center text-3xl md:text-4xl font-bold text-[hsl(var(--brand-lime))]">خدماتنا</h2>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
